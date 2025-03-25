@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>🚗 Car Price Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-4">🚗 Gebrauchtwagenpreis-Vorhersage</h1>
+
+        <form method="POST" class="row g-3">
+            <div class="col-md-6">
+                <label for="brand" class="form-label">Marke</label>
+                <select id="brand" name="brand" class="form-select" required>
+                    {% for brand in brands %}
+                    <option value="{{brand}}">{{brand}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="model_year" class="form-label">Baujahr</label>
+                <input type="number" class="form-control" id="model_year" name="model_year" placeholder="z.B. 2020"
+                    required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="kilometer" class="form-label">Kilometerstand</label>
+                <input type="number" class="form-control" id="kilometer" name="kilometer" placeholder="z.B. 50000"
+                    required>
+            </div>
+
+            <div class="col-md-6">
+                <label for="fuel_type" class="form-label">Treibstoffart</label>
+                <select id="fuel_type" name="fuel_type" class="form-select" required>
+                    <option>Benzin</option>
+                    <option>Diesel</option>
+                    <option>Elektrisch</option>
+                    <option>Hybrid</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label for="accident" class="form-label">Unfall</label>
+                <select id="accident" name="accident" class="form-select" required>
+                    <option value="True">Ja</option>
+                    <option value="False">Nein</option>
+                </select>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">Preis vorhersagen</button>
+            </div>
+        </form>
+
+        {% if entries %}
+        <hr>
+        <h3 class="mt-4">📋 Letzte Eingaben</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Marke</th>
+                    <th>Baujahr</th>
+                    <th>Kilometer</th>
+                    <th>Treibstoffart</th>
+                    <th>Unfall</th>
+                    <th>Vorhergesagter Preis (CHF)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entry in entries %}
+                <tr>
+                    <td>{{ entry.brand }}</td>
+                    <td>{{ entry.model_year }}</td>
+                    <td>{{ entry.kilometer }}</td>
+                    <td>{{ entry.fuel_type }}</td>
+                    <td>{{ 'Ja' if entry.accident == 'True' else 'Nein' }}</td>
+                    <td>{{ entry.prediction }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+
+
+        {% if prediction %}
+        <div class="alert alert-success mt-4">
+            💰 <strong>Vorhergesagter Preis:</strong> CHF {{ prediction }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+
+</html>
