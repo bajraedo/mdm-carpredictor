@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+import os 
 from flask import Flask, render_template, request, session
 import pandas as pd
 import joblib
@@ -15,7 +17,7 @@ Session(app)
 model = joblib.load('models/car_price_predictor.joblib')
 
 # MongoDB verbinden für Markenliste
-MONGODB_URI = 'mongodb+srv://carpredictor_user:Prima25vera@cluster0.sb2y7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+MONGODB_URI = os.getenv('MONGODB_URI')
 DATABASE = 'carpredictor'
 COLLECTION = 'cars'
 

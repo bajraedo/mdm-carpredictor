@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+import os
 import pandas as pd
 from pymongo import MongoClient
 from sklearn.model_selection import train_test_split, GridSearchCV
@@ -6,7 +8,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 import joblib
 
 # Verbindung zu MongoDB
-MONGODB_URI = 'mongodb+srv://carpredictor_user:Prima25vera@cluster0.sb2y7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+MONGODB_URI = os.getenv('MONGODB_URI')
 DATABASE = 'carpredictor'
 COLLECTION = 'cars'
 
